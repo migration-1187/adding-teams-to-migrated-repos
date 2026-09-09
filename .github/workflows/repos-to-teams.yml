@@ -1,0 +1,26 @@
+name: Add Repos to Teams
+
+on:
+  # Trigger manually from Actions tab
+  workflow_dispatch:
+  # Or trigger on schedule (e.g., daily at 2 AM UTC)
+env:
+  GH_PAT: ${{ secrets.GH_PAT }}
+  TARGET_API_URL: ${{ secrets.TARGET_API_URL }}
+
+jobs:
+  add-repos-to-teams:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run repos-to-teams script
+        run: bash ./repos-to-teams.sh
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: workflow-logs
+          path: /tmp/gh_response.txt
