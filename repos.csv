@@ -1,2 +1,2 @@
 org,teamproject,repo,github_org,github_repo,gh_repo_visibility,team-name
-v-biradarm,TestRepo2,fixpipelineTag,ADO-migration-test,fixpipelineTag,private,team-testing
+v-biradarm,TestRepo2,fixpipelineTag,ADO-migration-test,fixpipelineTag,private,team-testing|team-2|team-3
