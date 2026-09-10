@@ -54,18 +54,74 @@ v-biradarm,TestRepo2,fixpipelineTag,ADO-migration-test,fixpipelineTag,private,te
 
 ## Usage
 
+### Local Execution
+
 1. **Prepare the CSV file** with the repositories and teams to be added.
 
 2. **Set environment variables:**
-   ```bash
-   export GH_PAT="your_github_pat"
-   export TARGET_API_URL="https://api.github.com"
-   ```
+    ```bash
+    export GH_PAT="your_github_pat"
+    export TARGET_API_URL="https://api.github.com"
+    ```
 
 3. **Run the script:**
-   ```bash
-   ./repos-to-teams.sh
-   ```
+    ```bash
+    ./repos-to-teams.sh
+    ```
+
+### GitHub Actions Workflow
+
+This repository includes a GitHub Actions workflow (`.github/workflows/repos-to-teams.yml`) that automates the process of adding teams to repositories.
+
+#### Workflow Configuration
+
+The workflow is configured with the following features:
+
+- **Trigger:** Manual dispatch via the GitHub Actions tab
+- **Environment:** Runs on `ubuntu-latest`
+- **Secrets:** Uses `GH_PAT` and `TARGET_API_URL` from repository secrets
+
+#### Workflow Steps
+
+1. **Checkout Repository** - Fetches the latest code and CSV files
+2. **Run Script** - Executes the `repos-to-teams.sh` script with environment variables
+3. **Upload Logs on Failure** - Captures workflow logs as an artifact if the job fails
+
+#### Setting Up Secrets
+
+Before running the workflow, configure the following secrets in your repository settings:
+
+1. Go to **Settings** → **Secrets and variables** → **Actions**
+2. Add the following secrets:
+   - `GH_PAT`: Your GitHub Personal Access Token
+   - `TARGET_API_URL`: Your GitHub API URL (e.g., `https://api.github.com`)
+
+#### Running the Workflow
+
+1. Navigate to the **Actions** tab in your repository
+2. Select the **"Add Repos to Teams"** workflow
+3. Click **Run workflow**
+4. Select the branch (usually `main`)
+5. Click the green **Run workflow** button
+
+#### Monitoring Workflow Execution
+
+- View real-time logs as the workflow executes
+- Check the **Artifacts** section for logs if the workflow fails
+- Review the output to confirm teams were successfully added to repositories
+
+#### Example Workflow Output
+
+```
+Processing Repo: ADO-migration-test/fixpipelineTag
+Target Team    : team-testing
+Team Slug      : team-testing
+SUCCESS: Added repo to team: team-testing
+
+Target Team    : team-2
+Team Slug      : team-2
+SUCCESS: Added repo to team: team-2
+```
 
 ## How It Works
 
